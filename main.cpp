@@ -334,7 +334,7 @@ private:
         cout << "Introduceti numarul array-ului pe care doriti sa il stergeti ( 1 - " << arrays.size() << " ):\n";
         cin >> x;
 
-        if(x < 1 || x > arrays.size()) {
+        if(x < 1 || x > static_cast<int>(arrays.size())) {
             cout << "Acest array nu exista, va rugam sa reintroduceti.\n";
             return;
         }
@@ -347,7 +347,7 @@ private:
         cout << "Introduceti numarul array-ului pe care doriti sa il vizualizati (1 - " << arrays.size() << "): ";
         cin >> arr;
 
-        if (arr < 1 || arr > arrays.size()) {
+        if (arr < 1 || arr > static_cast<int>(arrays.size())) {
             cout << "Acest array nu exista, va rugam reintroduceti.\n";
             return;
         }
