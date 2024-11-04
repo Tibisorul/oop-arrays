@@ -11,7 +11,7 @@ using namespace std;
 class Element {
     int valoare;
     public:
-    Element(int valoare = 0) {
+    explicit Element(int valoare = 0) {
         this->valoare = valoare;
     }
 
@@ -50,7 +50,7 @@ public:
 
     }
 
-    Array(int n, int valori[]){
+    Array(int n,const  int valori[]){
         this->n = n;
         v = new Element[n];
         for(int i = 0; i < n; i++){
@@ -94,19 +94,20 @@ public:
         return n;
     }
 
+    /*
     Element *getV() const {
         return v;
     }
 
     //avem un singur setter deoarece nu are sens ca il setam pe N fara a-l seta pe v sau invers
-    void setNV(int n,int _v[]) {
+    void setNV(int n, const int _v[]) {
         delete[] v;
         this->n = n;
         v = new Element[n];
         for(int i=0;i<n;i++){
             v[i].setValoare(_v[i]);
         }
-    }
+    }*/
 
 
 
