@@ -3,6 +3,7 @@
 #include "../StatisticsOperation.h"
 #include "../SortOperation.h"
 
+/*
 void ArrayMenu::handleOperation(const Operation& operation) {
     std::cout << "Executam operatia: " << operation.getDescription() << "\n";
     operation.execute();
@@ -13,6 +14,7 @@ void ArrayMenu::handleOperation(const Operation& operation) {
         std::cout << "Aceasta este o operatie de statistici!\n";
     }
 }
+*/
 
 ArrayMenu::ArrayMenu() {
 }

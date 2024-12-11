@@ -17,7 +17,7 @@ public:
     ArrayMenu();
 
     void run();
-    static void handleOperation(const Operation& operation);
+    /*static void handleOperation(const Operation& operation);*/
 
 
 private:
