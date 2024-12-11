@@ -1,8 +1,5 @@
-
-
 #ifndef STATISTICSOPERATION_H
 #define STATISTICSOPERATION_H
-
 
 #include "Operation.h"
 #include <vector>
@@ -14,12 +11,12 @@ private:
     std::vector<int> data;
 
 public:
-    explicit StatisticsOperation(const std::vector<int>& data)
-        : Operation("Calculate statistics"), data(data) {}
+    explicit StatisticsOperation(const std::string& description, const std::vector<int>& data)
+        : Operation(description), data(data) {}
 
     void execute() const override {
         if (data.empty()) {
-            std::cout << "Data is empty.\n";
+            std::cout << "Data este goala.\n";
             return;
         }
 
@@ -32,7 +29,7 @@ public:
         variance /= data.size();
         double stddev = std::sqrt(variance);
 
-        std::cout << "Mean: " << mean << ", Variance: " << variance << ", StdDev: " << stddev << "\n";
+        std::cout << "Media: " << mean << ", Varianta: " << variance << ", StdDev: " << stddev << "\n";
     }
 
     std::string getDescription() const override {
@@ -44,5 +41,4 @@ public:
     }
 };
 
-
-#endif //STATISTICSOPERATION_H
+#endif

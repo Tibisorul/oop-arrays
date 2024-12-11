@@ -4,7 +4,6 @@
 #include <exception>
 #include <string>
 
-// Clasa de bază pentru excepții personalizate
 class CustomException : public std::exception {
 protected:
     std::string message;
@@ -17,25 +16,29 @@ public:
     }
 };
 
-// Excepție pentru dimensiune invalidă
 class InvalidSizeException : public CustomException {
 public:
-    explicit InvalidSizeException(const std::string& msg = "Dimensiune invalidă pentru array.")
+    explicit InvalidSizeException(const std::string& msg = "Invalid size for array.")
         : CustomException(msg) {}
 };
 
-// Excepție pentru index invalid
 class InvalidIndexException : public CustomException {
 public:
-    explicit InvalidIndexException(const std::string& msg = "Indexul este în afara limitelor.")
+    explicit InvalidIndexException(const std::string& msg = "The index is out of bounds.")
         : CustomException(msg) {}
 };
 
-// Excepție pentru operații pe array gol
 class EmptyArrayException : public CustomException {
 public:
-    explicit EmptyArrayException(const std::string& msg = "Operația nu poate fi efectuată pe un array gol.")
+    explicit EmptyArrayException(const std::string& msg = "The operation cannot be performed on an empty array.")
         : CustomException(msg) {}
 };
 
-#endif // CUSTOMEXCEPTIONS_H
+class InvalidOperationException : public CustomException {
+public:
+    explicit InvalidOperationException(const std::string& msg = "Operation cannot be performed.")
+        : CustomException(msg) {}
+};
+
+
+#endif

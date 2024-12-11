@@ -1,178 +1,181 @@
-
 #include "Array.h"
-#include <climits>
-#include <cstdint>
 #include <iostream>
-#include <limits>
+#include <algorithm>
+#include <numeric>
+
+int Array::objectCount = 0;
 
 Array::Array() {
-    n = 1;
-    v = new Element[1];
-    v[0].setValoare(0);
+    v.emplace_back(0);
+    objectCount++;
 }
 
 Array::Array(int n, const int valori[]) {
     if (n <= 0) {
-        throw std::invalid_argument("Dimensiunea array-ului trebuie să fie mai mare decât 0.");
+        throw InvalidSizeException("Numarul elementelor din array trebuie sa fie mai mare decat zero.");
     }
-    this->n = n;
-    v = new Element[n];
     for (int i = 0; i < n; i++) {
-        v[i].setValoare(valori[i]);
+        v.emplace_back(valori[i]);
     }
+    objectCount++;
 }
 
-Array::Array(const Array &a) {
-    n = a.n;
-    v = new Element[n];
-    for (int i = 0; i < n; i++) {
-        v[i] = a.v[i];
-    }
+/*Array::Array(const Array& a) : v(a.v) {
+    objectCount++;
 }
 
 Array& Array::operator=(const Array& a) {
     if (this != &a) {
-        delete[] v;
-
-        n = a.n;
-        v = new Element[n];
-        for (int i = 0; i < n; i++) {
-            v[i] = a.v[i];
-        }
+        v = a.v;
     }
     return *this;
 }
 
 Array::~Array() {
-    delete[] v;
+    objectCount--;
 }
 
+int Array::getObjectCount() {
+    return objectCount;
+}*/
+
 int Array::getN() const {
-    return n;
+    return static_cast<int>(v.size());
 }
 
 long long Array::getSum() const {
+    if (v.empty()) {
+        throw EmptyArrayException("Array-ul este gol. Nu se poate calcula suma.");
+    }
     long long sum = 0;
-    for (int i = 0; i < n; i++) sum += v[i].getValoare();
+    for (const auto& elem : v) {
+        sum += elem.getValoare();
+    }
     return sum;
 }
 
 int Array::getMax() const {
-    if (n == 0) {
-        throw std::logic_error("Array-ul este gol. Nu se poate calcula maximul.");
+    if (v.empty()) {
+        throw EmptyArrayException("Array-ul este gol. Nu se poate calcula maximul.");
     }
-    int maxim = std::numeric_limits<int>::min();
-    for (int i = 0; i < n; i++) {
-        maxim = std::max(maxim, v[i].getValoare());
-    }
-    return maxim;
+    return std::max_element(v.begin(), v.end(), [](const Element& a, const Element& b) {
+        return a.getValoare() < b.getValoare();
+    })->getValoare();
 }
 
 int Array::getMin() const {
-    if (n == 0) {
-        throw std::logic_error("Array-ul este gol. Nu se poate calcula minimul.");
+    if (v.empty()) {
+        throw EmptyArrayException("Array-ul este gol. Nu se poate calcula minimul.");
     }
-    int minim = std::numeric_limits<int>::max();
-    for (int i = 0; i < n; i++) {
-        minim = std::min(minim, v[i].getValoare());
-    }
-    return minim;
+    return std::min_element(v.begin(), v.end(), [](const Element& a, const Element& b) {
+        return a.getValoare() < b.getValoare();
+    })->getValoare();
 }
 
 int Array::getPozMax() const {
-    if (n == 0) {
-        throw std::logic_error("Array-ul este gol. Nu se poate calcula pozitia maximului.");
+    if (v.empty()) {
+        throw EmptyArrayException("Array-ul este gol. Nu se poate determina pozitia maximului.");
     }
-    int maxim = std::numeric_limits<int>::min(), poz = 0;
-    for (int i = 0; i < n; i++) {
-        if (maxim < v[i].getValoare()) {
+
+    int poz = 0;
+    int maxim = v[0].getValoare();
+
+    for (size_t i = 1; i < v.size(); ++i) {
+        if (v[i].getValoare() > maxim) {
             maxim = v[i].getValoare();
-            poz = i;
+            poz = static_cast<int>(i);
         }
     }
+
     return poz;
 }
 
 int Array::getPozMin() const {
-    if (n == 0) {
-        throw std::logic_error("Array-ul este gol. Nu se poate calcula pozitia minimului.");
+    if (v.empty()) {
+        throw EmptyArrayException("Array-ul este gol. Nu se poate determina pozitia minimului.");
     }
-    int minim = std::numeric_limits<int>::max(), poz = 0;
-    for (int i = 0; i < n; i++) {
-        if (minim > v[i].getValoare()) {
+
+    int poz = 0;
+    int minim = v[0].getValoare();
+
+    for (size_t i = 1; i < v.size(); ++i) {
+        if (v[i].getValoare() < minim) {
             minim = v[i].getValoare();
-            poz = i;
+            poz = static_cast<int>(i);
         }
     }
+
     return poz;
 }
 
 void Array::sort(int order) {
-    if (n < 2) {
-        throw std::logic_error("Array-ul trebuie să aibă cel puțin două elemente pentru a fi sortat.");
+    if (v.size() < 2) {
+        throw EmptyArrayException("Array-ul trebuie sa aiba cel putin doua elemente pentru a fi sortat.");
     }
-    if (order >= 0) order = 1;
-    else order = -1;
-
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < n - i; j++) {
-            if (order * v[j].getValoare() > order * v[j + 1].getValoare()) {
-                std::swap(v[j], v[j + 1]);
-            }
-        }
+    if (order >= 0) {
+        std::sort(v.begin(), v.end(), [](const Element& a, const Element& b) {
+            return a.getValoare() < b.getValoare();
+        });
+    } else {
+        std::sort(v.begin(), v.end(), [](const Element& a, const Element& b) {
+            return a.getValoare() > b.getValoare();
+        });
     }
 }
 
+/*
 bool Array::operator==(const Array& a) const {
-    if (n != a.n) return false;
-    for (int i = 0; i < n; i++) {
-        if (v[i] != a.v[i]) return false;
-    }
-    return true;
+    return v == a.v;
 }
 
 bool Array::operator!=(const Array& a) const {
     return !(*this == a);
-}
+}*/
 
 Element& Array::operator[](int i) {
-    if (i < 0 || i >= n) {
-        throw std::out_of_range("Indexul este în afara limitelor.");
+    if (i < 0 || i >= static_cast<int>(v.size())) {
+        throw InvalidIndexException("Indexul este in afara limitelor.");
     }
     return v[i];
 }
 
 const Element& Array::operator[](int i) const {
-    if (i < 0 || i >= n) {
-        throw std::out_of_range("Indexul este în afara limitelor.");
+    if (i < 0 || i >= static_cast<int>(v.size())) {
+        throw InvalidIndexException("Indexul este in afara limitelor.");
     }
     return v[i];
 }
 
-std::ostream& operator<<(std::ostream& os, Array a) {
-    os << "Vectorul are " << a.n << " elemente:\n";
-    for (int i = 0; i < a.n; i++) {
-        os << a.v[i] << " ";
+std::ostream& operator<<(std::ostream& os, const Array& a) {
+    os << "Array-ul are " << a.getN() << " elemente:\n";
+    for (const auto& elem : a.v) {
+        os << elem << " ";
     }
     os << "\n";
     return os;
 }
 
 std::istream& operator>>(std::istream& is, Array& a) {
-    std::cout << "Introduceti dimensiunea array-ului: ";
-    is >> a.n;
-    if (a.n <= 0) {
-        throw std::invalid_argument("Dimensiunea array-ului trebuie să fie mai mare decât 0.");
+    std::cout << "Introduceti dimensiunea array-ului:";
+    int n;
+    is >> n;
+    if (n <= 0) {
+        throw InvalidSizeException("Dimensiunea array-ului trebuie sa fie mai mare decat 0.");
     }
-    delete[] a.v;
-    a.v = new Element[a.n];
-    std::cout << "Introduceti elementele array-ului: ";
-    for (int i = 0; i < a.n; i++) {
+    a.v.clear();
+    std::cout << "Introduceti elementele array-ului:";
+    for (int i = 0; i < n; i++) {
         int temp;
         is >> temp;
-        a.v[i].setValoare(temp);
+        a.v.emplace_back(temp);
     }
     return is;
 }
 
-
+std::vector<int> Array::getData() const {
+    std::vector<int> data;
+    for (const auto& elem : v) {
+        data.push_back(elem.getValoare());
+    }
+    return data;
+}

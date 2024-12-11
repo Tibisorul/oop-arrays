@@ -12,14 +12,20 @@ private:
     std::vector<int> data;
 
 public:
-    explicit SortOperation(const std::vector<int>& data)
-        : Operation("Sort by ascending order"), data(data) {}
+    explicit SortOperation(const std::string& description, const std::vector<int>& data)
+        : Operation(description), data(data) {}
 
     void execute() const override {
+        if (data.empty()) {
+            std::cout << "No data to sort.\n";
+            return;
+        }
         std::vector<int> sortedData = data;
         std::sort(sortedData.begin(), sortedData.end());
         std::cout << "Sorted data: ";
-        for (int val : sortedData) std::cout << val << " ";
+        for (int val : sortedData) {
+            std::cout << val << " ";
+        }
         std::cout << "\n";
     }
 
@@ -32,5 +38,4 @@ public:
     }
 };
 
-
-#endif // SORTOPERATION_H
+#endif

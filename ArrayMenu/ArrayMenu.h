@@ -10,22 +10,24 @@
 
 class ArrayMenu {
 private:
-    std::vector<Array> arrays; // Listă de array-uri
+    std::vector<Array> arrays;
+    std::vector<std::unique_ptr<Operation>> operations;
 
 public:
-    ArrayMenu(); // Constructor
+    ArrayMenu();
 
-    void run(); // Funcția care rulează meniul principal
-    void handleOperation(const Operation& operation);
+    void run();
+    static void handleOperation(const Operation& operation);
 
 
 private:
-    void addArray(); // Adaugă un array
-    void removeArray(); // Șterge un array
-    void viewArray(); // Vizualizează un array
-    void handleArrayOption(Array& array, int option); // Gestionează opțiunile pentru un array
-    void displayStatistics(const Array& array); // Afișează statistici despre un array
+    void addArray();
+    void removeArray();
+    void viewArray();
+    void handleArrayOption(Array& array, int option);
+    static void displayStatistics(const Array& array);
+    void identifyOperation();
 
 };
 
-#endif //ARRAYMENU_H
+#endif

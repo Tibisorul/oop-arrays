@@ -1,8 +1,25 @@
 # Aplicatii pe Arrays folosind conceptele Programarii Orientate pe Obiecte
 
 ## Descriere proiect
-În acest repository vă este prezentat proiectul pentru laboratorul materiei POO din cadrul Facultății de Matematică și Informatică, CTI.
-Proiectul reprezinta o aplicatie care prezinta un meniu interactiv prin care se pot efectua diverse operatii pe arrays
+
+Proiectul este o aplicație C++ care permite gestionarea și manipularea unui set de array-uri. Utilizatorul poate crea, vizualiza, modifica și șterge array-uri, precum și aplica diverse operații asupra acestora, cum ar fi calculul minimului, maximului, poziției acestora, suma elementelor și sortarea array-ului. De asemenea, proiectul permite afișarea statisticilor (media, mediana, varianța) și identificarea dinamică a operațiilor utilizând dynamic_cast.
+
+Proiectul utilizează concepte de Programare Orientată pe Obiecte (OOP), precum moștenirea, polimorfismul, excepțiile personalizate și dynamic_cast. Se folosește și STL (Standard Template Library) pentru funcționalități precum vectori, sortare și acumulare.
+
+## 📂 Fișiere principale
+
+- **`main.cpp`**: Punctul de intrare în aplicație, unde este inițializat meniul principal.
+- **`ArrayMenu.h` / `ArrayMenu.cpp`**: Meniul principal pentru gestionarea array-urilor. Utilizatorul poate adăuga, șterge, vizualiza și opera asupra array-urilor.
+- **`Array.h` / `Array.cpp`**: Clasa `Array`, care conține vectorul de elemente și metodele pentru manipularea acestuia.
+- **`Element.h` / `Element.cpp`**: Clasa `Element`, care definește un element din array.
+- **`CustomExceptions.h`**: Definirea excepțiilor personalizate, cum ar fi `InvalidSizeException`, `InvalidIndexException` și `EmptyArrayException`.
+- **`Operation.h`**: Clasa de bază `Operation`, care definește o operație generică.
+- **`SortOperation.h`**: Operație de sortare, derivată din `Operation`.
+- **`StatisticsOperation.h`**: Operație de calcul al statisticilor array-ului (media, varianță, mediană).
+- **`FilterOperation.h`**: Operație de filtrare (opțional, dacă a fost implementată).
+
+
+
 
 ## Milestone #0
 

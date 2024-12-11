@@ -9,17 +9,16 @@ class Element {
 
 public:
     explicit Element(int valoare = 0);
-
     int getValoare() const;
-    void setValoare(int valoare);
-
-    bool operator<(const Element& other) const;
-    bool operator>(const Element& other) const;
-
-    bool operator==(const Element& other) const;
-    bool operator!=(const Element& other) const;
-
     friend std::ostream& operator<<(std::ostream& os, const Element& elem);
+
+    //void setValoare(int valoare);
+
+    /*bool operator<(const Element& other) const;
+    bool operator>(const Element& other) const;*/
+
+    /*bool operator==(const Element& other) const;
+    bool operator!=(const Element& other) const;*/
 };
 
-#endif //ELEMENT_H
+#endif

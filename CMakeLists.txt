@@ -56,7 +56,6 @@ add_executable(${PROJECT_NAME}
         Operation.h
         SortOperation.h
         StatisticsOperation.h
-        FilterOperation.h
         CustomExceptions.h
 )
 

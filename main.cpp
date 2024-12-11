@@ -3,7 +3,6 @@
 #include <valarray>
 #include <vector>
 
-#include "FilterOperation.h"
 #include "SortOperation.h"
 #include "StatisticsOperation.h"
 #include "Array/Array.h"
@@ -19,7 +18,10 @@ using namespace std;
 
 class Element {
     int valoare;
+
+    
     public:
+    // explicit previne conversiile implicite de tip (ex: Element e = 5)
     explicit Element(int valoare = 0) {
         this->valoare = valoare;
     }
@@ -31,12 +33,15 @@ class Element {
         this->valoare = valoare;
     }
 
+    // permite compararea a doua obiecte de tip Element
     bool operator<(const Element& other) const { return valoare < other.valoare; }
     bool operator>(const Element& other) const { return valoare > other.valoare; }
 
     bool operator==(const Element& other) const { return valoare == other.valoare; }
     bool operator!=(const Element& other) const { return valoare != other.valoare; }
 
+    // afisarea a unui obiect Element
+    // friend -> pentru accesarea membrului privat din clasa Element, adica valoare
     friend ostream& operator<<(ostream& os, const Element& elem) {
         os << elem.valoare;
         return os;
@@ -448,21 +453,32 @@ int main(){
 }*/
 
 int main() {
-    ArrayMenu menu;
+    try {
 
-    // Creăm operațiuni pentru testare
-    const SortOperation sortOp(std::vector<int>{3, 1, 4, 1, 5, 9});
-    const StatisticsOperation statsOp(std::vector<int>{3, 1, 4, 1, 5, 9});
-    const FilterOperation filterOp(std::vector<int>{3, 1, 4, 1, 5, 9});
+        ArrayMenu menu;
+        menu.run();
 
-    // Apelăm meniul principal
-    menu.run();
+        int valori[] = {1, 2, 3, 4, 5};
+        Array array(5, valori);
 
-    // Exemplu de utilizare a funcției handleOperation
-    std::cout << "Testing operation handling:\n";
-    menu.handleOperation(sortOp);
-    menu.handleOperation(statsOp);
-    menu.handleOperation(filterOp);
+        std::cout << "Suma elementelor array-ului este: " << array.getSum() << "\n";
+
+        std::cout << "Elementul pe index-ul 2: " << array[2] << "\n";
+
+        std::cout << "Incercare de accesare a unui index invalid: \n";
+        std::cout << array[10] << "\n";
+
+    } catch (const InvalidIndexException& e) {
+        std::cerr << "InvalidIndexException prins: " << e.what() << "\n";
+    } catch (const InvalidSizeException& e) {
+        std::cerr << "InvalidSizeException prins: " << e.what() << "\n";
+    } catch (const EmptyArrayException& e) {
+        std::cerr << "EmptyArrayException prins: " << e.what() << "\n";
+    } catch (const std::exception& e) {
+        std::cerr << "Standard exception prins: " << e.what() << "\n";
+    }
+
+    std::cout << "Executia programului continua: \n";
 
     return 0;
 }

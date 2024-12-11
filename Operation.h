@@ -7,19 +7,19 @@
 
 class Operation {
 protected:
-    std::string description; // Variabila membru
+    std::string description;
 
 public:
     explicit Operation(const std::string& desc) : description(desc) {}
     virtual ~Operation() = default;
 
-    virtual std::string getDescription() const { // Declarația corectă
+    virtual std::string getDescription() const {
         return description;
     }
 
-    virtual void execute() const = 0; // Funcție virtuală pură
-    virtual std::unique_ptr<Operation> clone() const = 0; // Funcție virtuală pură
+    virtual void execute() const = 0;
+    virtual std::unique_ptr<Operation> clone() const = 0;
 };
 
 
-#endif //OPERATION_H
+#endif
