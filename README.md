@@ -16,7 +16,6 @@ Proiectul utilizează concepte de Programare Orientată pe Obiecte (OOP), precum
 - **`Operation.h`**: Clasa de bază `Operation`, care definește o operație generică.
 - **`SortOperation.h`**: Operație de sortare, derivată din `Operation`.
 - **`StatisticsOperation.h`**: Operație de calcul al statisticilor array-ului (media, varianță, mediană).
-- **`FilterOperation.h`**: Operație de filtrare (opțional, dacă a fost implementată).
 
 
 
