@@ -45,9 +45,24 @@ include(cmake/Options.cmake)
 add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
+        Array/Array.cpp
+        Array/Array.h
+        Element/Element.cpp
+        Element/Element.h
+        Statistics/Statistics.cpp
+        Statistics/Statistics.h
+        ArrayMenu/ArrayMenu.cpp
+        ArrayMenu/ArrayMenu.h
+        Operation.h
+        SortOperation.h
+        StatisticsOperation.h
+        FilterOperation.h
+        CustomExceptions.h
 )
 
 include(cmake/CompilerFlags.cmake)
+include_directories(${CMAKE_SOURCE_DIR}/Element)
+
 
 ###############################################################################
 

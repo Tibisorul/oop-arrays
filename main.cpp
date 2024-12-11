@@ -3,7 +3,16 @@
 #include <valarray>
 #include <vector>
 
+#include "FilterOperation.h"
+#include "SortOperation.h"
+#include "StatisticsOperation.h"
+#include "Array/Array.h"
+#include "Statistics/Statistics.h"
+#include "ArrayMenu/ArrayMenu.h"
 
+
+
+/*
 class Array;
 using namespace std;
 
@@ -107,7 +116,7 @@ public:
         for(int i=0;i<n;i++){
             v[i].setValoare(_v[i]);
         }
-    }*/
+    }#1#
 
 
 
@@ -436,7 +445,28 @@ int main(){
     ArrayMenu menu;
     menu.run();
     return 0;
+}*/
+
+int main() {
+    ArrayMenu menu;
+
+    // Creăm operațiuni pentru testare
+    const SortOperation sortOp(std::vector<int>{3, 1, 4, 1, 5, 9});
+    const StatisticsOperation statsOp(std::vector<int>{3, 1, 4, 1, 5, 9});
+    const FilterOperation filterOp(std::vector<int>{3, 1, 4, 1, 5, 9});
+
+    // Apelăm meniul principal
+    menu.run();
+
+    // Exemplu de utilizare a funcției handleOperation
+    std::cout << "Testing operation handling:\n";
+    menu.handleOperation(sortOp);
+    menu.handleOperation(statsOp);
+    menu.handleOperation(filterOp);
+
+    return 0;
 }
+
 
 
 
