@@ -33,9 +33,9 @@ public:
         return "Sort Operation";
     }
 
-    /*std::unique_ptr<Operation> clone() const override {
+    std::unique_ptr<Operation> clone() const override {
         return std::make_unique<SortOperation>(*this);
-    }*/
+    }
 };
 
 #endif

@@ -13,8 +13,7 @@ void ArrayMenu::handleOperation(const Operation& operation) {
     } else if (dynamic_cast<const StatisticsOperation*>(&operation)) {
         std::cout << "Aceasta este o operatie de statistici!\n";
     }
-}
-*/
+}*/
 
 ArrayMenu::ArrayMenu() {
 }
@@ -191,12 +190,12 @@ void ArrayMenu::identifyOperation() {
         return;
     }
 
-    std::cout << "Lista operatiilor curente:\n";
+    std::cout << "Lista de operatii curente:\n";
     for (size_t i = 0; i < operations.size(); ++i) {
         std::cout << i + 1 << ". " << operations[i]->getDescription() << "\n";
     }
 
-    std::cout << "Selectati indexul operatiei (1 la " << operations.size() << "): ";
+    std::cout << "Selectati indexul operatiei (1 - " << operations.size() << "): ";
     int index;
     std::cin >> index;
 
@@ -205,18 +204,21 @@ void ArrayMenu::identifyOperation() {
         return;
     }
 
-    const auto& op = operations[index - 1];
+    // Utilizam clone() pentru a copia operatia selectata
+    const auto& selectedOperation = operations[index - 1];
+    auto clonedOperation = selectedOperation->clone();
 
-    std::cout << "Descrierea operatiei: " << op->getDescription() << "\n";
+    std::cout << "Operatia clonata: " << clonedOperation->getDescription() << "\n";
 
-    if (dynamic_cast<SortOperation*>(op.get())) {
+    if (dynamic_cast<SortOperation*>(clonedOperation.get())) {
         std::cout << "Aceasta este o operatie de sortare.\n";
-    } else if (dynamic_cast<StatisticsOperation*>(op.get())) {
+    } else if (dynamic_cast<StatisticsOperation*>(clonedOperation.get())) {
         std::cout << "Aceasta este o operatie de statistici.\n";
     } else {
-        std::cout << "Tip de operatie necunoscut.\n";
+        std::cout << "Tip necunoscut de operatie.\n";
     }
 }
+
 
 void ArrayMenu::displayStatistics(const Array& array) {
     std::vector<int> data = array.getData();
