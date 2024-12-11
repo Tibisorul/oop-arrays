@@ -3,7 +3,6 @@
 #include "../StatisticsOperation.h"
 #include "../SortOperation.h"
 
-/*
 void ArrayMenu::handleOperation(const Operation& operation) {
     std::cout << "Executam operatia: " << operation.getDescription() << "\n";
     operation.execute();
@@ -13,7 +12,7 @@ void ArrayMenu::handleOperation(const Operation& operation) {
     } else if (dynamic_cast<const StatisticsOperation*>(&operation)) {
         std::cout << "Aceasta este o operatie de statistici!\n";
     }
-}*/
+}
 
 ArrayMenu::ArrayMenu() {
 }
@@ -184,6 +183,7 @@ void ArrayMenu::handleArrayOption(Array& array, int option) {
     }
 }
 
+/*
 void ArrayMenu::identifyOperation() {
     if (operations.empty()) {
         std::cout << "Nu exista operatii disponibile.\n";
@@ -218,6 +218,48 @@ void ArrayMenu::identifyOperation() {
         std::cout << "Tip necunoscut de operatie.\n";
     }
 }
+*/
+
+void ArrayMenu::identifyOperation() {
+    if (operations.empty()) {
+        std::cout << "Nu exista operatii disponibile.\n";
+        return;
+    }
+
+    std::cout << "Lista de operatii curente:\n";
+    for (size_t i = 0; i < operations.size(); ++i) {
+        std::cout << i + 1 << ". " << operations[i]->getDescription() << "\n";
+    }
+
+    std::cout << "Selectati indexul operatiei (1 - " << operations.size() << "): ";
+    int index;
+    std::cin >> index;
+
+    if (index < 1 || index > static_cast<int>(operations.size())) {
+        std::cout << "Index invalid.\n";
+        return;
+    }
+
+    // Utilizam operatia selectata
+    const auto& selectedOperation = operations[index - 1];
+
+    // Apelam handleOperation pentru a gestiona operatia selectata
+    handleOperation(*selectedOperation);
+
+    // Optional: pastram logica de clonare
+    auto clonedOperation = selectedOperation->clone();
+
+    std::cout << "Operatia clonata: " << clonedOperation->getDescription() << "\n";
+
+    if (dynamic_cast<SortOperation*>(clonedOperation.get())) {
+        std::cout << "Aceasta este o operatie de sortare.\n";
+    } else if (dynamic_cast<StatisticsOperation*>(clonedOperation.get())) {
+        std::cout << "Aceasta este o operatie de statistici.\n";
+    } else {
+        std::cout << "Tip necunoscut de operatie.\n";
+    }
+}
+
 
 
 void ArrayMenu::displayStatistics(const Array& array) {
