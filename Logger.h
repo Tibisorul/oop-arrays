@@ -6,7 +6,7 @@
 
 class Logger {
 private:
-   Logger(const std::string &fileName);
+  explicit Logger(const std::string &fileName);
     std::ofstream logFile;
 
 public:

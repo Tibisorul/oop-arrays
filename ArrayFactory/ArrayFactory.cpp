@@ -9,10 +9,9 @@ Array ArrayFactory::createArrayWithValues(int n, const int valori[]) {
     return Array(n, valori);
 }
 
-Array ArrayFactory::createArrayWithDefaultValue(int n, int valoareImplicita) {
+/*Array ArrayFactory::createArrayWithDefaultValue(int n, int valoareImplicita) {
     std::vector<int>valori(n, valoareImplicita);
     return Array(n, valori.data());
 }
-
-
+*/
 

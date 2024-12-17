@@ -24,3 +24,7 @@
 [INFO] Un array nou a fost adaugat. Dimensiune: 3
 [INFO] Operatia de sortare a fost executata.
 [INFO] Aplicatia a fost inchisa.
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Operatia de sortare a fost executata.
+[INFO] Array-ul a fost sters cu succes.
+[INFO] Aplicatia a fost inchisa.
