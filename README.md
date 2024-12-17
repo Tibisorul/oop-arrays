@@ -6,6 +6,11 @@ Proiectul este o aplicație C++ care permite gestionarea și manipularea unui se
 
 Proiectul utilizează concepte de Programare Orientată pe Obiecte (OOP), precum moștenirea, polimorfismul, excepțiile personalizate și dynamic_cast. Se folosește și STL (Standard Template Library) pentru funcționalități precum vectori, sortare și acumulare.
 
+În cadrul **Milestone 3**, proiectul a fost extins cu:
+- **Implementarea a două design patterns**: Singleton și Factory Method.
+- **Utilizarea claselor și funcțiilor șablon (template)** pentru operații generice asupra array-urilor.
+- **Logger** pentru înregistrarea evenimentelor în fișierul `log.txt`.
+
 ## 📂 Fișiere principale
 
 - **`main.cpp`**: Punctul de intrare în aplicație, unde este inițializat meniul principal.
@@ -16,6 +21,45 @@ Proiectul utilizează concepte de Programare Orientată pe Obiecte (OOP), precum
 - **`Operation.h`**: Clasa de bază `Operation`, care definește o operație generică.
 - **`SortOperation.h`**: Operație de sortare, derivată din `Operation`.
 - **`StatisticsOperation.h`**: Operație de calcul al statisticilor array-ului (media, varianță, mediană).
+- **`Logger.h` / `Logger.cpp`**: Implementarea design pattern-ului **Singleton** pentru un logger care înregistrează evenimentele într-un fișier `log.txt`.
+- **`ArrayFactory.h` / `ArrayFactory.cpp`**: Implementarea design pattern-ului **Factory Method** pentru crearea obiectelor `Array` cu valori implicite sau date personalizate.
+- **`Calculator.h`**: Clasă șablon (template) utilizată pentru operații generice asupra array-urilor (sumă, maxim, minim).
+
+---
+
+## 🛠️ Funcționalități principale
+
+1. **Adăugarea, ștergerea și vizualizarea array-urilor**.
+2. **Operații asupra array-urilor**:
+   - Calculul minimului și maximului.
+   - Determinarea poziției minimului și maximului.
+   - Calculul sumei elementelor.
+   - Sortarea elementelor (crescător/descrescător).
+3. **Afișarea statisticilor**:
+   - Media, varianța și mediana array-ului.
+4. **Logger**:
+   - Evenimentele sunt înregistrate într-un fișier `log.txt`.
+5. **Template-uri (Clase și Funcții)**:
+   - Clasa `Calculator` permite efectuarea operațiilor de sumă, maxim și minim pentru orice tip de date.
+   - Funcția `afiseazaVector` permite înregistrarea vectorului în log.
+
+---
+
+## 🚀 Design Patterns implementate
+
+1. **Singleton**:
+   - Utilizat pentru implementarea clasei `Logger`, astfel încât să existe o singură instanță pentru înregistrarea evenimentelor.
+2. **Factory Method**:
+   - Implementat în clasa `ArrayFactory` pentru a crea obiecte de tip `Array` cu valori implicite sau date introduse.
+
+---
+
+## 🧩 Template-uri
+
+- **Clasa `Calculator`**: Permite calcularea unor operații generice (sumă, maxim, minim) asupra unui vector de orice tip de date.
+- **Funcția `afiseazaVector`**: O funcție șablon care scrie conținutul unui vector în log, fără a-l afișa în terminal.
+
+---
 
 
 
