@@ -42,6 +42,10 @@ include(cmake/Options.cmake)
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
+add_library(Logger Logger.cpp)
+target_link_libraries(Logger PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+
+
 add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
@@ -57,6 +61,11 @@ add_executable(${PROJECT_NAME}
         SortOperation.h
         StatisticsOperation.h
         CustomExceptions.h
+        Logger.cpp
+        Logger.h
+        ArrayFactory/ArrayFactory.cpp
+        ArrayFactory/ArrayFactory.h
+        CalculatorTemplate/Calculator.h
 )
 
 include(cmake/CompilerFlags.cmake)

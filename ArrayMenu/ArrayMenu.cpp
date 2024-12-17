@@ -1,7 +1,11 @@
 #include "ArrayMenu.h"
+#include "../Logger.h"
+#include "../ArrayFactory/ArrayFactory.h"
 #include <iostream>
 #include "../StatisticsOperation.h"
 #include "../SortOperation.h"
+#include "../Statistics/Statistics.h"
+#include "../CalculatorTemplate/Calculator.h"
 
 void ArrayMenu::handleOperation(const Operation& operation) {
     std::cout << "Executam operatia: " << operation.getDescription() << "\n";
@@ -14,8 +18,7 @@ void ArrayMenu::handleOperation(const Operation& operation) {
     }
 }
 
-ArrayMenu::ArrayMenu() {
-}
+ArrayMenu::ArrayMenu() = default;
 
 void ArrayMenu::run() {
     int input;
@@ -25,7 +28,6 @@ void ArrayMenu::run() {
               << "3. Vizualizati un array.\n"
               << "0. Iesire.\n";
     std::cin >> input;
-
     while (input != 0) {
         switch (input) {
             case 1:
@@ -48,15 +50,50 @@ void ArrayMenu::run() {
                   << "0. Iesire.\n";
         std::cin >> input;
     }
+    std::cout << "Iesire din aplicatie...";
+    Logger::getInstance()->log("[INFO] Aplicatia a fost inchisa.");
 }
 
+
 void ArrayMenu::addArray() {
-    Array a;
-    std::cout << "Introduceti valorile pentru noul array:\n";
-    std::cin >> a;
+    int n;
+    std::cout << "Introduceti dimensiunea array-ului: ";
+    std::cin >> n;
+
+    if (n <= 0 || std::cin.fail()) {
+        Logger::getInstance()->log("[ERROR] Dimensiune invalida pentru array.");
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Dimensiunea trebuie sa fie mai mare decat 0. Operatia a fost anulata.\n";
+        return;
+    }
+
+    std::cout << "Introduceti valorile array-ului:\n";
+    int* valori = new int[n];
+    for (int i = 0; i < n; ++i) {
+        std::cin >> valori[i];
+        if (std::cin.fail()) {
+            Logger::getInstance()->log("[ERROR] Valoare invalida introdusa pentru array.");
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Valoare invalida detectata. Operatia a fost anulata.\n";
+            delete[] valori;
+            return;
+        }
+    }
+
+
+    Array a = ArrayFactory::createArrayWithValues(n, valori);
     arrays.push_back(a);
+
+
+    Logger::getInstance()->log("[INFO] Un array nou a fost adaugat. Dimensiune: " + std::to_string(a.getN()));
+
     std::cout << "Array adaugat cu succes!\n";
+
+    delete[] valori;
 }
+
 
 void ArrayMenu::removeArray() {
     int x;
@@ -64,10 +101,12 @@ void ArrayMenu::removeArray() {
     std::cin >> x;
 
     if (x < 1 || x > static_cast<int>(arrays.size())) {
+        Logger::getInstance()->log("[ERROR] Index invalid la stergerea array-ului.");
         std::cout << "Acest array nu exista, va rugam sa reintroduceti.\n";
         return;
     }
     arrays.erase(arrays.begin() + x - 1);
+    Logger::getInstance()->log("[INFO] Array-ul a fost sters cu succes.");
     std::cout << "Array-ul a fost sters cu succes!\n";
 }
 
@@ -84,7 +123,9 @@ void ArrayMenu::viewArray() {
     }
 
     Array& selectedArray = arrays[arr - 1];
-    std::cout << selectedArray;
+    //std::cout << selectedArray;
+
+    afiseazaVector(selectedArray.getData());
 
     int option;
 
@@ -99,6 +140,7 @@ void ArrayMenu::viewArray() {
                   << "7. Sortati elementele.\n"
                   << "8. Afisati statistici (media, varianta, mediana).\n"
                   << "9. Identificati operatia.\n"
+                  << "10. Resetare array.\n"
                   << "0. Inapoi.\n";
     };
 
@@ -151,10 +193,31 @@ void ArrayMenu::handleArrayOption(Array& array, int option) {
             operations.push_back(std::make_unique<StatisticsOperation>(
                 "Calculati suma", array.getData()));
             break;
-        case 6:
-            std::cout << "Reintroduceti valorile pentru array:\n";
-            std::cin >> array;
+        case 6: {
+            std::cout << "Reintroduceti dimensiunea array-ului: ";
+            int n;
+            std::cin >> n;
+
+            if (n <= 0 || std::cin.fail()) {
+                Logger::getInstance()->log("[ERROR] Dimensiune invalida pentru reintroducerea array-ului.");
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Dimensiunea trebuie sa fie mai mare decat 0. Operatia a fost anulata.\n";
+                return;
+            }
+
+            std::cout << "Introduceti valorile array-ului:\n";
+            int* valori = new int[n];
+            for (int i = 0; i < n; ++i) {
+                std::cin >> valori[i];
+            }
+
+            array = ArrayFactory::createArrayWithValues(n, valori);
+            Logger::getInstance()->log("[INFO] Array-ul a fost reintrodus cu succes. Dimensiune: " + std::to_string(n));
+
+            delete[] valori;
             break;
+        }
         case 7: {
             int order;
             std::cout << "Crescator / Descrescator? (1 / 0): ";
@@ -162,6 +225,7 @@ void ArrayMenu::handleArrayOption(Array& array, int option) {
 
             try {
                 array.sort(order == 1 ? 1 : -1);
+                Logger::getInstance()->log("[INFO] Operatia de sortare a fost executata.");
                 std::cout << "Array-ul a fost sortat!\n";
                 operations.push_back(std::make_unique<SortOperation>(
                     (order == 1 ? "Sortati in ordine crescatoare" : "Sortati in ordine descrescatoare"),
@@ -177,13 +241,18 @@ void ArrayMenu::handleArrayOption(Array& array, int option) {
         case 9:
             identifyOperation();
             break;
+        case 10: {
+            array = ArrayFactory::createEmptyArray();
+            Logger::getInstance()->log("[INFO] Array-ul a fost resetat la valori implicite.");
+            std::cout << "Array-ul a fost resetat!\n";
+            break;
+        }
         default:
             std::cout << "Optiune invalida!\n";
             break;
     }
 }
 
-/*
 void ArrayMenu::identifyOperation() {
     if (operations.empty()) {
         std::cout << "Nu exista operatii disponibile.\n";
@@ -204,49 +273,10 @@ void ArrayMenu::identifyOperation() {
         return;
     }
 
-    // Utilizam clone() pentru a copia operatia selectata
-    const auto& selectedOperation = operations[index - 1];
-    auto clonedOperation = selectedOperation->clone();
-
-    std::cout << "Operatia clonata: " << clonedOperation->getDescription() << "\n";
-
-    if (dynamic_cast<SortOperation*>(clonedOperation.get())) {
-        std::cout << "Aceasta este o operatie de sortare.\n";
-    } else if (dynamic_cast<StatisticsOperation*>(clonedOperation.get())) {
-        std::cout << "Aceasta este o operatie de statistici.\n";
-    } else {
-        std::cout << "Tip necunoscut de operatie.\n";
-    }
-}
-*/
-
-void ArrayMenu::identifyOperation() {
-    if (operations.empty()) {
-        std::cout << "Nu exista operatii disponibile.\n";
-        return;
-    }
-
-    std::cout << "Lista de operatii curente:\n";
-    for (size_t i = 0; i < operations.size(); ++i) {
-        std::cout << i + 1 << ". " << operations[i]->getDescription() << "\n";
-    }
-
-    std::cout << "Selectati indexul operatiei (1 - " << operations.size() << "): ";
-    int index;
-    std::cin >> index;
-
-    if (index < 1 || index > static_cast<int>(operations.size())) {
-        std::cout << "Index invalid.\n";
-        return;
-    }
-
-    // Utilizam operatia selectata
     const auto& selectedOperation = operations[index - 1];
 
-    // Apelam handleOperation pentru a gestiona operatia selectata
     handleOperation(*selectedOperation);
 
-    // Optional: pastram logica de clonare
     auto clonedOperation = selectedOperation->clone();
 
     std::cout << "Operatia clonata: " << clonedOperation->getDescription() << "\n";

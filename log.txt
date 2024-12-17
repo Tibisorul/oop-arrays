@@ -1,0 +1,26 @@
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Operatia de sortare a fost executata.
+[INFO] Operatia de sortare a fost executata.
+[INFO] Aplicatia a fost inchisa.
+[INFO] Un array nou a fost adaugat. Dimensiune: 4
+[INFO] Array-ul a fost sters cu succes.
+[INFO] Aplicatia a fost inchisa.
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Array-ul a fost reintrodus cu succes. Dimensiune: 2
+[INFO] Aplicatia a fost inchisa.
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Array-ul a fost resetat la valori implicite.
+[INFO] Aplicatia a fost inchisa.
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Operatia de sortare a fost executata.
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Aplicatia a fost inchisa.
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Un array nou a fost adaugat. Dimensiune: 3
+[INFO] Operatia de sortare a fost executata.
+[INFO] Aplicatia a fost inchisa.

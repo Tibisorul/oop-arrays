@@ -1,4 +1,5 @@
 #include "Array.h"
+#include "../CalculatorTemplate/Calculator.h"
 #include <iostream>
 #include <algorithm>
 #include <numeric>
@@ -43,6 +44,7 @@ int Array::getN() const {
     return static_cast<int>(v.size());
 }
 
+/*
 long long Array::getSum() const {
     if (v.empty()) {
         throw EmptyArrayException("Array-ul este gol. Nu se poate calcula suma.");
@@ -53,8 +55,37 @@ long long Array::getSum() const {
     }
     return sum;
 }
+*/
+
+long long Array::getSum() const {
+    if (v.empty()) {
+        throw EmptyArrayException("Array-ul este gol. Nu se poate calcula suma.");
+    }
+    std::vector<int> valori = getData();
+    Calculator<int> calc(valori);
+    return calc.getSuma();
+}
 
 int Array::getMax() const {
+    if (v.empty()) {
+        throw EmptyArrayException("Array-ul este gol. Nu se poate calcula maximul.");
+    }
+    std::vector<int> valori = getData();
+    Calculator<int> calc(valori);
+    return calc.getMax();
+}
+
+int Array::getMin() const {
+    if (v.empty()) {
+        throw EmptyArrayException("Array-ul este gol. Nu se poate calcula minimul.");
+    }
+    std::vector<int> valori = getData();
+    Calculator<int> calc(valori);
+    return calc.getMin();
+}
+
+
+/*int Array::getMax() const {
     if (v.empty()) {
         throw EmptyArrayException("Array-ul este gol. Nu se poate calcula maximul.");
     }
@@ -70,7 +101,7 @@ int Array::getMin() const {
     return std::min_element(v.begin(), v.end(), [](const Element& a, const Element& b) {
         return a.getValoare() < b.getValoare();
     })->getValoare();
-}
+}*/
 
 int Array::getPozMax() const {
     if (v.empty()) {
@@ -146,14 +177,21 @@ const Element& Array::operator[](int i) const {
     return v[i];
 }
 
-std::ostream& operator<<(std::ostream& os, const Array& a) {
+/*std::ostream& operator<<(std::ostream& os, const Array& a) {
     os << "Array-ul are " << a.getN() << " elemente:\n";
     for (const auto& elem : a.v) {
         os << elem << " ";
     }
     os << "\n";
     return os;
+}*/
+
+std::ostream& operator<<(std::ostream& os, const Array& a) {
+    os << "Array-ul are " << a.getN() << " elemente:\n";
+    afiseazaVector(a.getData());
+    return os;
 }
+
 
 std::istream& operator>>(std::istream& is, Array& a) {
     std::cout << "Introduceti dimensiunea array-ului:";

@@ -2,10 +2,8 @@
 #define ARRAYMENU_H
 
 #include "../Array/Array.h"
-#include "../Statistics/Statistics.h"
 #include <vector>
 #include "../Operation.h"
-
 
 
 class ArrayMenu {

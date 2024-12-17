@@ -8,9 +8,15 @@
 #include "Array/Array.h"
 #include "Statistics/Statistics.h"
 #include "ArrayMenu/ArrayMenu.h"
+#include "../Logger.h"
 
 int main() {
-    try {
+
+    ArrayMenu menu;
+    menu.run();
+
+
+    /*try {
 
         ArrayMenu menu;
         menu.run();
@@ -35,7 +41,7 @@ int main() {
         std::cerr << "Standard exception prins: " << e.what() << "\n";
     }
 
-    std::cout << "Executia programului continua: \n";
+    std::cout << "Executia programului continua: \n";*/
 
     return 0;
 }
